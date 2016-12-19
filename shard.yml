@@ -8,6 +8,15 @@ targets:
   megadl-web:
     main: src/megadl-web.cr
 
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+    branch: master
+
+  sqlite3:
+    github: crystal-lang/crystal-sqlite3
+
+
 crystal: 0.20.1
 
 license: MIT
