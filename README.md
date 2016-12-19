@@ -1,7 +1,8 @@
 # megadl-web
 
-TODO: Write a description here
+A web interface to manage your MEGA downloads. Something like [CouchPotato](https://couchpota.to/) but for [MEGA](https://mega.co.nz/) and written in [Crystal](https://crystal-lang.org/)
 
+*Please note, this is still a work in progress.*
 ## Installation
 
 TODO: Write installation instructions here
