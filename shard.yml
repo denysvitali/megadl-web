@@ -1,5 +1,13 @@
 name: megadl-web
-dependencies:
-  kemal:
-    github: kemalcr/kemal
-    branch: master
+version: 0.1.0
+
+authors:
+  - Denys Vitali <denys.vitali@coelis.ch>
+
+targets:
+  megadl-web:
+    main: src/megadl-web.cr
+
+crystal: 0.20.1
+
+license: MIT
