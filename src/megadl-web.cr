@@ -4,6 +4,6 @@ require "./routing/router.cr"
 require "./db/init.cr"
 
 module Megadl::Web
-  DB::Instance.new
+  db = DB::Instance.new
   Kemal.run
 end

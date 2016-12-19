@@ -12,6 +12,12 @@ module DB
       readDB
     end
 
+    def openDB
+      DB.open "sqlite3://" + @@filePath do |db|
+        yield db
+      end
+    end
+
     def generateDB
       puts "Generating DB"
       begin
@@ -23,7 +29,7 @@ module DB
         puts "okay..."
       end
       File.write(@@filePath, nil)
-      DB.open "sqlite3://" + @@filePath do |db|
+      self.openDB do |db|
           db.exec "create table settings (key string, value string)"
           db.exec "insert into settings values (?,?)", "gen_date", Time.now
 
@@ -32,7 +38,7 @@ module DB
     end
 
     def readDB
-      DB.open "sqlite3://" + @@filePath do |db|
+      self.openDB do |db|
         begin
           puts db.scalar "select value from settings where key='gen_date'"
         rescue
@@ -41,6 +47,10 @@ module DB
           generateDB
         end
       end
+    end
+
+    def needsSetup
+
     end
 
   end
