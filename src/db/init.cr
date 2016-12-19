@@ -4,12 +4,9 @@ module DB
     @@dataDir : String = "./data"
     @@filePath : String = @@dataDir + "/main.db"
     def initialize()
-      puts "Initializing DB"
       if !File.exists?(@@filePath)
         generateDB
       end
-
-      readDB
     end
 
     def openDB
@@ -49,9 +46,44 @@ module DB
       end
     end
 
-    def needsSetup
-
+    def readVal(@key : String, @defaultValue = false)
+      self.openDB do |db|
+      begin
+        db.scalar "select value from settings where key=?", @key
+      rescue
+        defaultValue
+      end
+    end
     end
 
+    def putVal(@key : (String | Nil), @value : Bool)
+      self.putVal(@key, @value.to_s)
+    end
+    def putVal(@key : (String | Nil), @value : String)
+      puts "key=" + @key.to_s + ", val=" + @value.to_s
+      self.openDB do |db|
+        begin
+          res = nil
+          begin
+            db.scalar "select count(value) from settings where key=?", @key
+          rescue err
+            puts err
+            res = nil
+          end
+          if res == nil || res.to_s == ""
+            puts "Inserting..."
+            puts "--" + res.to_s + "--"
+            db.exec "insert into settings (key,value) values (?,?)", @key, @value
+          else
+            puts "Updating..."
+            db.exec "update settings set value='?' where key='?'", @key, @value
+          end
+          puts res
+        rescue er
+          puts er
+          false
+        end
+      end
+    end
   end
 end
