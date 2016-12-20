@@ -34,6 +34,11 @@ module DB
       end
     end
 
+    def reset
+      File.write(@@filePath, nil)
+      generateDB
+    end
+
     def readDB
       self.openDB do |db|
         begin
