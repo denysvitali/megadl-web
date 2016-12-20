@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 html {
-    background-color: #f0f0f0;
+    background-color: #f7f7f7;
 }
 
 body {
@@ -11,10 +11,15 @@ body {
     max-width: 900px;
     padding: 1em;
     line-height: 1.4;
-    text-align: justify
+    text-align: justify;
+}
+
+h1,h2,h3,h4,h5,h6{
+  color: #ba0000;
 }
 
 heading{
+    display: block;
     margin-bottom: 2em;
 }
 
@@ -24,171 +29,88 @@ heading>h1{
 
 heading>p{
   margin-top: 0.4em;
+  color: #666;
+  text-transform: capitalize;
+  font-size: 0.8em;
 }
 
 a, a:visited {
     color: #2980b9
 }
 
-span.wr {
-    color: #c0392b;
-    font-weight: 600;
-    text-decoration: underline
+.background-image.bg{
+  display: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -100;
+}
+.background-image.bg>.bgoverlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background-color: rgba(247,247,247,0.81);
+}
+.background-image.bg>.bgimg{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  background-image: url('/img/background.jpg');
+  background-size: cover;
+  background-position: 50% 50%;
 }
 
-span.sb {
-    color: #00e
+.login-form{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -300px;
+  margin-top: -200px;
+  width: 600px;
+  height: 400px;
+  text-align: center;
 }
 
-span.sb, span.sv {
-    cursor: not-allowed
+.login-form>input, .login-form>label{
+  font-size: 1.2em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-span.sv {
-    color: #551a8b
+.login-form>button{
+  color: #FEFEFE;
+  width: 150px;
+  height: 40px;
+  background-color: #c11b05;
+  border: 1px solid #c11b05;
+  border-radius: 4px;
+  box-shadow: 0px 2px 3px #666;
+  transition: box-shadow 0.1s ease;
 }
 
-span.foufoufou {
-    color: #444;
-    font-weight: 700
+.login-form>button:active{
+  box-shadow: 0px 0px 1px #666;
+  transition: box-shadow 0.1s ease-in;
 }
 
-span.foufoufou:before {
-    content: "";
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    margin-left: .2em;
-    margin-right: .2em;
-    background-color: #444
+.login-form>label{
+  margin-bottom: 0.3em;
 }
-
-span.fivfivfiv {
-    color: #555;
-    font-weight: 700
-}
-
-span.fivfivfiv:before {
-    content: "";
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    margin-left: .2em;
-    margin-right: .2em;
-    background-color: #555
-}
-
-span.mfw {
-    color: #16a085
-}
-
-span.citneed {
-    vertical-align: top;
-    font-size: .7em;
-    padding-left: .3em
-}
-
-small {
-    font-size: .4em
-}
-
-p.st {
-    margin-top: -1em
-}
-
-div.fancyPositioning div.picture-left {
-    float: left;
-    width: 40%;
-    overflow: hidden;
-    margin-right: 1em
-}
-
-div.fancyPositioning div.picture-left img {
-    width: 100%
-}
-
-div.fancyPositioning div.picture-left p.caption {
-    font-size: .7em
-}
-
-div.fancyPositioning div.tleft {
-    float: left;
-    width: 55%
-}
-
-div.fancyPositioning div.tleft p:first-child {
-    margin-top: 0
-}
-
-div.fancyPositioning:after {
-    display: block;
-    content: "";
-    clear: both
-}
-
-ul li img {
-    height: 1em
-}
-
-blockquote {
-    color: #777;
-    margin-left: 0;
-    margin-top: 2em;
-    margin-bottom: 2em
-}
-
-blockquote span {
-    float: left;
-    margin-left: 1rem;
-    padding-top: 1rem
-}
-
-blockquote author {
-    display: block;
-    clear: both;
-    font-size: .6em;
-    margin-left: 2.4rem;
-    font-style: oblique
-}
-
-blockquote author:before {
-    content: "- ";
-    margin-right: 1em
-}
-
-blockquote:before {
-    font-family: Times New Roman, Times, Arial;
-    color: #666;
-    content: open-quote;
-    font-size: 2.2em;
-    font-weight: 600;
-    float: left;
-    margin-top: 0;
-    margin-right: .2rem;
-    width: 1.2rem
-}
-
-blockquote:after {
-    content: "";
-    display: block;
-    clear: both
-}
-
-@media screen and (max-width:500px) {
-    div.fancyPositioning div.picture-left, div.fancyPositioning div.tleft {
-        float: none;
-        width: inherit
-    }
-    blockquote span {
-        width: 80%
-    }
-    blockquote author {
-        padding-top: 1em;
-        width: 80%;
-        margin-left: 15%
-    }
-    blockquote author:before {
-        content: "";
-        margin-right: inherit
-    }
+.login-form>input{
+  margin-bottom: 1em;
+  border-radius: 4px;
+  border: 1px solid #999;
+  padding: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
 }
