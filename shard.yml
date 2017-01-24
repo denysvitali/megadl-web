@@ -16,6 +16,10 @@ dependencies:
   sqlite3:
     github: crystal-lang/crystal-sqlite3
 
+  cossack:
+    github: greyblake/crystal-cossack
+    version: ~> 0.1
+
 
 crystal: 0.20.1
 
