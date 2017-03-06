@@ -2,6 +2,7 @@ require "cossack"
 require "xml"
 require "../plugins.cr"
 
+
 class Reddit
   extend Plugins
   @@endpoint = "http://reddit.com"
@@ -28,8 +29,14 @@ class Reddit
 
             if matches && keyMatch
               cleanTitle = el["data"]["title"].to_s
-              output[el["data"]["title"].to_s] = "http://mega.nz/#{matches[0]}#{keyMatch[0]}"
+              titleMatches = / ([^\[\]]+\(\d{4}\))/.match(cleanTitle)
+              if titleMatches && titleMatches[1]
+                cleanTitle = titleMatches[1]
+              end
+              output[cleanTitle] = "http://mega.nz/#{matches[0]}#{keyMatch[0]}"
             end
+            #puts matches
+            #puts keyMatch
           end
         end
       end
@@ -40,10 +47,12 @@ class Reddit
   def fetchMovie(url : String)
     response = @@cossack.get url
     document = response.body
+    #puts document
     megaLinks = [] of String
     matches = document.scan(/http(?:s|):\/\/(?:www\.|)mega\.(?:co\.|)nz\/#[^"]*/mi) do |res|
-      megaLinks << res[0].to_s
+        megaLinks << res[0].to_s
     end
     megaLinks.uniq!
+
   end
 end

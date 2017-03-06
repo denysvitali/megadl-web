@@ -114,3 +114,41 @@ a, a:visited {
   padding-right: 10px;
   text-align: center;
 }
+
+.movies{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.movies div.movie-el{
+  display: block;
+  width: 400px;
+  height: 600px;
+}
+
+.movies div.movie-el div.poster{
+  display: block;
+  width: 350px;
+  margin-left: 25px;
+  margin-top: 10px;
+  height: 500px;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+
+.movies div.movie-el div.title{
+  display: block;
+  width: 90%;
+  margin-left: 5%;
+  text-align: center;
+  font-weight: 600;
+}
+.movies div.movie-el a{
+  display: block;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 1em;
+  text-align: center;
+}

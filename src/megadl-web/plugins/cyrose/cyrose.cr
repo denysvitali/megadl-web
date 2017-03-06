@@ -6,7 +6,7 @@ require "../plugins.cr"
 class Cyrose
   extend Plugins
   @@endpoint = "http://cyro.se"
-  @@Movies = {} of String => Array(String)
+  @@Movies = {} of String => String
   @@cossack = Cossack::Client.new do |client|
     # follow up to 10 redirections (by default 5)
     client.use Cossack::RedirectionMiddleware, limit: 10
@@ -20,12 +20,10 @@ class Cyrose
     document = response.body
     matches = document.scan(/<table[^>]*? class="topic_table".*?>*?<td[^>]*?class="topic_head"[^>]*?>.*?<a href="(goto-.*?)".*?>.*?<font[^>]*?>(.*?)<\/font>.*?<\/td>/m) do |res|
       if res && res[0]
-        puts res[1]
-        puts res[2]
-        @@Movies[res[2]] = self.fetchMovie("#{baseUrl}#{res[1]}")#, res[2])
+        @@Movies[res[2]] = self.fetchMovie("#{baseUrl}#{res[1]}")[0]#, res[2])
       end
     end
-    puts @@Movies
+    @@Movies
   end
 
   def fetchMovie(url : String)

@@ -1,20 +1,37 @@
 require "./megadl-web/*"
 require "kemal"
-require "./routing/router.cr"
 require "./db/init.cr"
 require "./setup.cr"
-require "./plugins/cyrose/cyrose.cr"
-require "./plugins/reddit/reddit.cr"
+require "./template/template.cr"
+
 
 module Megadl::Web
+
   db = DB::Instance.new
   db.readDB
 
-  cyrose = Cyrose.new
-  #cyrose.fetch
 
-  reddit = Reddit.new
-  #reddit.fetch
+  f = Fetcher.new
+  movies = f.fetch
+
+  get "/" do |x|
+    db = DB::Instance.new
+    if !db.readVal("setup_completed",false)
+      x.redirect "/setup"
+      next
+    end
+
+    rview "src/views/index.ecr"
+  end
+
+  get "/login" do |x|
+    db = DB::Instance.new
+    if !db.readVal("setup_completed",false)
+      x.redirect "/setup"
+      next
+    end
+    rview "src/views/login.ecr"
+  end
 
   Kemal.run
 end

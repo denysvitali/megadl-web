@@ -2,4 +2,18 @@
   <h1>megadl-web</h1>
   <p>A 🔮 Crystal MEGA download manager</p>
 </heading>
-<p>It's <%= Time.now.to_s("%d.%m.%Y") %></p>
+<div class="movies">
+<%- movies.each do |el| %>
+  <% result = el[2] %>
+  <% if result %>
+  <% if result.poster == "N/A" %>
+    <% result.poster = "img/nocover.jpg" %>
+  <% end %>
+  <div class="movie-el">
+    <div class="title"><%= result.title %> (<%= result.year %>, <%= result.country %>)</div>
+    <div class="poster" style="background-image:url('<%= result.poster %>')"></div>
+    <a href="<%= el[1] %>">Download</a>
+  </div>
+  <% end %>
+<% end %>
+</div>
