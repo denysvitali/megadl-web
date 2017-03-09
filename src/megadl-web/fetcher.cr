@@ -44,7 +44,11 @@ module Megadl::Web
         uri = URI.parse("http://www.omdbapi.com/?t=#{escaped_title}&y=#{year}")
         puts uri
         client = HTTP::Client.get uri
-        OpenMovieDB::Result.from_json client.body
+        begin
+          OpenMovieDB::Result.from_json client.body
+        rescue ex
+          puts "Movie not found #{title}"
+        end
       else
         nil
       end
