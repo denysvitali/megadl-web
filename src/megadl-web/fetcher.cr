@@ -8,6 +8,8 @@ module Megadl::Web
     end
 
     def fetch
+
+      puts "Fetching from Reddit..."
       reddit = Reddit.new
       redditRes = reddit.fetch
 
@@ -19,6 +21,7 @@ module Megadl::Web
         end
       end
 
+      puts "Fetching from Cyro.se..."
       cyrose = Cyrose.new
       cyroseRes = cyrose.fetch
 

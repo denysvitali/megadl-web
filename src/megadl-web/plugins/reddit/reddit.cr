@@ -1,6 +1,7 @@
 require "cossack"
 require "xml"
 require "../plugins.cr"
+require "../../utilities/cleantitle.cr"
 
 
 class Reddit
@@ -27,16 +28,16 @@ class Reddit
             matches = el["data"]["selftext"].to_s.match /#(?:F|)\![A-z0-9]{6,}/
             keyMatch = el["data"]["selftext"].to_s.match /\![A-z0-9_-]{22,}/
 
-            if matches && keyMatch
-              cleanTitle = el["data"]["title"].to_s
-              titleMatches = / ([^\[\]]+\(\d{4}\))/.match(cleanTitle)
-              if titleMatches && titleMatches[1]
-                cleanTitle = titleMatches[1]
+            if matches
+              cleanTitle =  Utilities::CleanTitle.clean el["data"]["title"].to_s
+
+              if keyMatch
+                output[cleanTitle] = "http://mega.nz/#{matches[0]}#{keyMatch[0]}"
+              else
+                key = getKey el["data"]["permalink"].to_s + ".json"
+                output[cleanTitle] = "http://mega.nz/#{matches[0]}#{key}"
               end
-              output[cleanTitle] = "http://mega.nz/#{matches[0]}#{keyMatch[0]}"
             end
-            #puts matches
-            #puts keyMatch
           end
         end
       end
@@ -44,12 +45,26 @@ class Reddit
     output
   end
 
+  def getKey(url : String)
+    response = @@cossack.get "http://reddit.com" + url
+    document = response.body
+    json = JSON.parse(document)
+
+    json[1]["data"]["children"].each do |el|
+      match = /(\![A-z0-9_-]{22,})/.match(el["data"]["body"].to_s)
+      if match
+        return match[1]
+      end
+    end
+    ""
+  end
+
   def fetchMovie(url : String)
     response = @@cossack.get url
     document = response.body
     #puts document
     megaLinks = [] of String
-    matches = document.scan(/http(?:s|):\/\/(?:www\.|)mega\.(?:co\.|)nz\/#[^"]*/mi) do |res|
+    matches = document.scan(/http(?:s|):\/\/(?:www\.|)(?:mega\.(?:co\.|)nz|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\/#[^"]*/mi) do |res|
         megaLinks << res[0].to_s
     end
     megaLinks.uniq!
